@@ -36,16 +36,83 @@ const espocrm = @import("espocrmz").Client;
 ### Using API Key Authentication:
 
 ```go
-  var gpa = std.heap.GeneralPurposeAllocator(.{}){};
-  defer _ = gpa.deinit();
-  const allocator = gpa.allocator();
-
-  const client = Client.init("https://espocrm.example.com", .{ .api_key = "Your API Key here" });
+var gpa = std.heap.GeneralPurposeAllocator(.{}){};
+defer _ = gpa.deinit();
+const allocator = gpa.allocator();
+const client = Client.init("https://espocrm.example.com", .{ .api_key = "Your API Key here" });
 ```
 
 ### Making a Read request:
 
 ```zig
-  const result = try client.readEntity("Contact", "78abc123def456", allocator);
-  defer allocator.free(result);
+var gpa = std.heap.GeneralPurposeAllocator(.{}){};
+defer _ = gpa.deinit();
+const allocator = gpa.allocator();
+
+const result = try client.readEntity("Contact", "78abc123def456", allocator);
+defer allocator.free(result);
+```
+
+### Making a List request:
+
+```zig
+var gpa = std.heap.GeneralPurposeAllocator(.{}){};
+defer _ = gpa.deinit();
+const allocator = gpa.allocator();
+
+var params = espocrm.Parameters.init();
+_ = params.maxSize(10).order(espocrm.Parameters.Order.Asc);
+const params_encoded = try params.encode(allocator);
+
+const result = try client.listEntities(allocator, "Contact", params, &[_]espocrm.Where{
+  .{ .filter_type = espocrm.FilterOption.Equals, .filter_attribute = "name", .filter_value = "Alice" },
+  .{ .filter_type = espocrm.FilterOption.GreaterThan, .filter_attribute = "age", .filter_value = "42" },
+});
+defer allocator.free(result);
+```
+
+### Making a Create request:
+
+```zig
+var gpa = std.heap.GeneralPurposeAllocator(.{}){};
+defer _ = gpa.deinit();
+const allocator = gpa.allocator();
+
+const new_contact =
+  \\{
+  \\  "name": "Alice",
+  \\  "age": 69
+  \\}
+;
+
+const result = try espocrm.createEntity(allocator, "Contact", new_contact);
+defer allocator.free(result);
+```
+
+### Making an Update request:
+
+```zig
+var gpa = std.heap.GeneralPurposeAllocator(.{}){};
+defer _ = gpa.deinit();
+const allocator = gpa.allocator();
+
+const update_info =
+  \\{
+  \\  "name": "Bob
+  \\}
+;
+
+const result = try client.updateEntity(allocator, "Contact", "67abe33f5883bd9e", update_info);
+defer allocator.free(result);
+```
+
+### Making a Delete request:
+
+```zig
+var gpa = std.heap.GeneralPurposeAllocator(.{}){};
+defer _ = gpa.deinit();
+const allocator = gpa.allocator();
+
+const result = try client.deleteEntity(allocator, "Contact", "67abe33f5883bd9e");
+defer allocator.free(result);
 ```
