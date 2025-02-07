@@ -12,17 +12,9 @@ test "deserialize json string" {
     const parsed = try espocrm.Deserialize(allocator, Account, json_string);
     defer parsed.deinit();
 
-    try std.testing.expect(std.mem.eql(
-        u8,
-        parsed.value.accountNumber,
-        "12345",
-    ));
+    try std.testing.expect(std.mem.eql(u8, parsed.value.accountNumber, "12345"));
 
-    try std.testing.expect(std.mem.eql(
-        u8,
-        parsed.value.name,
-        "Alice",
-    ));
+    try std.testing.expect(std.mem.eql(u8, parsed.value.name, "Alice"));
 }
 
 test "serialize struct" {
@@ -50,7 +42,11 @@ test "where filter encoding" {
     });
     defer allocator.free(where);
 
-    try std.testing.expect(std.mem.eql(u8, where, "&where[0][type]=equals&where[0][attribute]=a&where[0][value]=c&where[1][type]=notEquals&where[1][attribute]=b&where[1][value]=d"));
+    try std.testing.expect(std.mem.eql(
+        u8,
+        where,
+        "&where[0][type]=equals&where[0][attribute]=a&where[0][value]=c&where[1][type]=notEquals&where[1][attribute]=b&where[1][value]=d",
+    ));
 }
 
 test "parameter encoding" {
