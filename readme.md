@@ -35,7 +35,7 @@ const espocrm = @import("espocrmz").Client;
 
 ### Using API Key Authentication:
 
-```go
+```zig
 var gpa = std.heap.GeneralPurposeAllocator(.{}){};
 defer _ = gpa.deinit();
 const allocator = gpa.allocator();
