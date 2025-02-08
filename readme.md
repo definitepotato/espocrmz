@@ -98,7 +98,7 @@ const allocator = gpa.allocator();
 
 const update_info =
   \\{
-  \\  "name": "Bob
+  \\  "name": "Bob"
   \\}
 ;
 
