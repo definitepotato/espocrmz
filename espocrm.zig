@@ -414,22 +414,22 @@ pub const Parameters = struct {
 
     // TODO: orderBy()
 
-    pub fn maxSize(self: *Parameters, value: usize) *Parameters {
+    pub fn setMaxSize(self: *Parameters, value: usize) *Parameters {
         self.max_size = value;
         return self;
     }
 
-    pub fn offset(self: *Parameters, value: usize) *Parameters {
+    pub fn setOffset(self: *Parameters, value: usize) *Parameters {
         self.offset = value;
         return self;
     }
 
-    pub fn order(self: *Parameters, value: Order) *Parameters {
+    pub fn setOrder(self: *Parameters, value: Order) *Parameters {
         self.order_asc_desc = value.string();
         return self;
     }
 
-    pub fn total(self: *Parameters, value: bool) *Parameters {
+    pub fn setTotal(self: *Parameters, value: bool) *Parameters {
         self.total = value;
         return self;
     }

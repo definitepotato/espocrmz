@@ -54,7 +54,7 @@ test "parameter encoding" {
 
     var params = espocrm.Parameters.init();
 
-    _ = params.maxSize(10).order(espocrm.Parameters.Order.Asc);
+    _ = params.setMaxSize(10).setOrder(espocrm.Parameters.Order.Asc);
     const res = try params.encode(allocator);
     defer allocator.free(res);
 
