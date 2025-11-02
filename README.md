@@ -1,5 +1,7 @@
 # Getting Started
 
+> The current state of the SDK only works in zig 0.14 until I can find time to migrate the codebase to the latest.
+
 This Zig `espocrm` library provides an API client for EspoCRM. To get started you'll have to provide the URL where EspoCRM is located and your method of authentication. Read more from the [official documentation](https://docs.espocrm.com/development/api/#authentication).
 
 ## Installation
